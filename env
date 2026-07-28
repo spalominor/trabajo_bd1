@@ -1,0 +1,13 @@
+# rename to .env and config
+# mysql credentials
+MYSQL_IMAGE=oraclelinux9
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=bd1_trabajo
+MYSQL_USER=usuario
+MYSQL_PASSWORD=userpassword
+
+# postgres credentials
+POSTGRES_IMAGE=latest
+POSTGRES_DB=bd1_trabajo
+POSTGRES_USER=usuario
+POSTGRES_PASSWORD=userpassword
