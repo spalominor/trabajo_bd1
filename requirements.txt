@@ -3,3 +3,4 @@ mysql-connector-python==9.7.0
 polars==1.43.1
 polars-runtime-32==1.43.1
 psycopg2-binary==2.9.12
+python-dotenv==1.2.2
