@@ -28,8 +28,8 @@ CREATE TABLE BUQUE (
 
 CREATE TABLE VIAJE (
     codigo CHAR(10) NOT NULL,
-    fecha_estimada_salida DATETIME NOT NULL,
-    fecha_estimada_llegada DATETIME NOT NULL,
+    fecha_estimada_salida DATE NOT NULL,
+    fecha_estimada_llegada DATE NOT NULL,
     estado VARCHAR(20) NOT NULL,
     consumo_combustible INT UNSIGNED NOT NULL,
     buque_numero_omi INT UNSIGNED NOT NULL,
