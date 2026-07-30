@@ -1,4 +1,5 @@
 import os
+import io
 import time
 from dotenv import load_dotenv
 import psycopg2
@@ -71,7 +72,7 @@ def query_postgres(name_query):
                 elapsed_time = time.perf_counter() - start_time
     return result, elapsed_time
 
-# TODO: cut n rows from csv file and insert into postgres database
+
 def insert_data_postgres(number_rows):
     # insert n rows from csv file into postgres database
     with psycopg2.connect(POSTGRES_URL) as conn:
@@ -80,13 +81,21 @@ def insert_data_postgres(number_rows):
             
             for table in TABLES:
                 csv_filepath = f"data/{table}.csv"
+                
+                buffer = io.StringIO()
                 with open(csv_filepath, "r", encoding="utf-8") as f:
-                    sql_copy = f"""
-                        COPY {table} 
-                        FROM STDIN 
-                        WITH (FORMAT CSV, HEADER true, DELIMITER ',');
-                    """
-                    cur.copy_expert(sql_copy, f)
+                    for idx, line in enumerate(f):
+                        if idx > number_rows:
+                            break
+                        buffer.write(line)
+                buffer.seek(0)
+                
+                sql_copy = f"""
+                    COPY {table} 
+                    FROM STDIN 
+                    WITH (FORMAT CSV, HEADER true, DELIMITER ',');
+                """
+                cur.copy_expert(sql_copy, buffer)
             
             conn.commit()
             elapsed_time = time.perf_counter() - start_time
@@ -108,7 +117,8 @@ def insert_data_mysql(number_rows):
                     FIELDS TERMINATED BY ','
                     OPTIONALLY ENCLOSED BY '"'
                     LINES TERMINATED BY '\n'
-                    IGNORE 1 LINES;
+                    IGNORE 1 LINES
+                    LIMIT {number_rows};
                 """
                 cur.execute(sql_load)
 
