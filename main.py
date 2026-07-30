@@ -47,10 +47,11 @@ def benchmark():
                     sql_query_results[(db_name, number_rows, query)].append(sql_time)
                     
                 # fase iv: pythonic queries execution
-                tables = dml.select_all_database(db_name)
+                tables, elapsed_time = dml.select_all_database(db_name)
                 for query in TEST_QUERIES:
                     result, polars_time = pythonic_queries.polars_query(tables, query)
-                    polars_query_results[(db_name, number_rows, query)].append(polars_time)
+                    total_time = elapsed_time + polars_time
+                    polars_query_results[(db_name, number_rows, query)].append(total_time)
     
     return insertion_results, sql_query_results, polars_query_results
 

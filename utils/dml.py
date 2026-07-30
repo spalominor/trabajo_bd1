@@ -40,6 +40,7 @@ DB_URLS = {
 
 
 def select_all_database(name_database):
+    start_time = time.perf_counter()
     result = {}
     for table in TABLES:
         result[table] = pl.read_database_uri(
@@ -47,7 +48,9 @@ def select_all_database(name_database):
             uri=DB_URLS[name_database],
             engine="connectorx"
         )
-    return result
+    elapsed_time = time.perf_counter() - start_time
+    print(f"Selected all tables from {name_database} in {elapsed_time:.4f} seconds.")
+    return result, elapsed_time
     
     
 def query_mysql(name_query):
