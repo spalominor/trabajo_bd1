@@ -70,3 +70,48 @@ def query_postgres(name_query):
                 result = cur.fetchall()
                 elapsed_time = time.perf_counter() - start_time
     return result, elapsed_time
+
+# TODO: cut n rows from csv file and insert into postgres database
+def insert_data_postgres(number_rows):
+    # insert n rows from csv file into postgres database
+    with psycopg2.connect(POSTGRES_URL) as conn:
+        with conn.cursor() as cur:
+            start_time = time.perf_counter()
+            
+            for table in TABLES:
+                csv_filepath = f"data/{table}.csv"
+                with open(csv_filepath, "r", encoding="utf-8") as f:
+                    sql_copy = f"""
+                        COPY {table} 
+                        FROM STDIN 
+                        WITH (FORMAT CSV, HEADER true, DELIMITER ',');
+                    """
+                    cur.copy_expert(sql_copy, f)
+            
+            conn.commit()
+            elapsed_time = time.perf_counter() - start_time
+            print(f"Inserted {number_rows} rows into Postgres in {elapsed_time:.4f} seconds.")
+
+
+
+def insert_data_mysql(number_rows):
+    with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
+        with cnx.cursor() as cur:
+            start_time = time.perf_counter()
+            
+            for table in TABLES:
+                csv_filepath = f"data/{table}.csv"
+                    
+                sql_load = f"""
+                    LOAD DATA LOCAL INFILE '{csv_filepath}'
+                    INTO TABLE {table}
+                    FIELDS TERMINATED BY ','
+                    OPTIONALLY ENCLOSED BY '"'
+                    LINES TERMINATED BY '\n'
+                    IGNORE 1 LINES;
+                """
+                cur.execute(sql_load)
+
+            cnx.commit()
+            elapsed_time = time.perf_counter() - start_time
+            print(f"Inserted {number_rows} rows into MySQL in {elapsed_time:.4f} seconds.")

@@ -28,7 +28,7 @@ DESCRIPCIONES_MERCANCIA = [
 ]
 
 
-def crear_navieras():
+def create_navieras():
     filename = os.path.join(OUTPUT_DIR, "naviera.csv")
     
     # pregenerate all the random values
@@ -47,7 +47,7 @@ def crear_navieras():
     print(f"Creado: {filename} ({ROWS:,} filas)")
 
 
-def crear_buques():
+def create_buques():
     filename = os.path.join(OUTPUT_DIR, "buque.csv")    
     
     # pregenerate all the random values
@@ -79,7 +79,7 @@ def crear_buques():
     print(f"Creado: {filename} ({ROWS:,} filas)")
 
 
-def crear_viajes():
+def create_viajes():
     filename = os.path.join(OUTPUT_DIR, "viaje.csv")
     
     # pregenerate all the random values
@@ -114,7 +114,7 @@ def crear_viajes():
     print(f"Creado: {filename} ({ROWS:,} filas)")
 
 
-def crear_mercancias():
+def create_mercancias():
     filename = os.path.join(OUTPUT_DIR, "mercancia.csv")
     
     # pregenerate all the random values
