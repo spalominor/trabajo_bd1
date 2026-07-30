@@ -104,7 +104,6 @@ def insert_data_postgres(number_rows):
     return elapsed_time
 
 
-
 def insert_data_mysql(number_rows):
     with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
         with cnx.cursor() as cur:
@@ -128,3 +127,19 @@ def insert_data_mysql(number_rows):
             elapsed_time = time.perf_counter() - start_time
             print(f"Inserted {number_rows} rows into MySQL in {elapsed_time:.4f} seconds.")
     return elapsed_time
+
+
+def insert_data(name_database, number_rows):
+    if name_database == "postgres":
+        print(f"Inserting {number_rows} rows into Postgres...")
+        return insert_data_postgres(number_rows)
+    elif name_database == "mysql":
+        print(f"Inserting {number_rows} rows into MySQL...")
+        return insert_data_mysql(number_rows)
+    
+
+def query(name_database, name_query):
+    if name_database == "postgres":
+        return query_postgres(name_query)
+    elif name_database == "mysql":
+        return query_mysql(name_query)

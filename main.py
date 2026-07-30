@@ -4,12 +4,12 @@ from utils import data, ddl, dml, pythonic_queries, summarize
 
 TEST_DATABASES = ["postgres", "mysql"]
 TEST_ROWS = [1, 10, 100]
-TEST_QUERIES = ["query1", "query2"]
+TEST_QUERIES = ["query_1", "query_2"]
 TEST_TRIES = 3
 """
 TEST_DATABASES = ["postgres", "mysql"]
 TEST_ROWS = [1000, 10000, 100000]
-TEST_QUERIES = ["query1", "query2"]
+TEST_QUERIES = ["query_1", "query_2"]
 TEST_TRIES = 3
 """
 
@@ -17,14 +17,6 @@ TEST_TRIES = 3
 def schema_creation():
     ddl.create_postgres_tables()
     ddl.create_mysql_tables()
-    
-    
-# step 2: data creation. only one time for the 100.000 rows
-def artificial_data_creation():
-    data.create_navieras()
-    data.create_buques()
-    data.create_viajes()
-    data.create_mercancias()
 
 
 def benchmark():
@@ -35,11 +27,11 @@ def benchmark():
     
     # step 1 and 2
     schema_creation()
-    artificial_data_creation()
     
     # for each number of rows
     for db_name in TEST_DATABASES:
         for number_rows in TEST_ROWS:
+            data.create_all_data(number_rows)
             for attempt in range(TEST_TRIES):
                 ddl.reset_db(db_name)
                 
@@ -50,13 +42,13 @@ def benchmark():
                 # fase iii: sql queries execution
                 for query in TEST_QUERIES:
                     result, sql_time = dml.query(db_name, query)
-                    sql_query_results[(db_name, query)].append(sql_time)
+                    sql_query_results[(db_name, number_rows, query)].append(sql_time)
                     
                 # fase iv: pythonic queries execution
                 tables = dml.select_all_database(db_name)
                 for query in TEST_QUERIES:
                     result, polars_time = pythonic_queries.polars_query(tables, query)
-                    polars_query_results[(db_name, query)].append(polars_time)
+                    polars_query_results[(db_name, number_rows, query)].append(polars_time)
     
     return insertion_results, sql_query_results, polars_query_results
 

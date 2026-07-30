@@ -7,7 +7,6 @@ import numpy as np
 rng = np.random.default_rng(seed=23)
 
 OUTPUT_DIR = "data"
-ROWS = 100
 OMI_BASE = 9000000
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -28,40 +27,40 @@ DESCRIPCIONES_MERCANCIA = [
 ]
 
 
-def create_navieras():
+def create_navieras(rows):
     filename = os.path.join(OUTPUT_DIR, "naviera.csv")
     
     # pregenerate all the random values
-    paises_random = rng.choice(PAISES, size=ROWS)
-    solas_random = rng.choice([True, False], size=ROWS, p=[0.8, 0.2])
-    ism_random = rng.choice([True, False], size=ROWS, p=[0.8, 0.2])
+    paises_random = rng.choice(PAISES, size=rows)
+    solas_random = rng.choice([True, False], size=rows, p=[0.8, 0.2])
+    ism_random = rng.choice([True, False], size=rows, p=[0.8, 0.2])
     
     with open(filename, "w", encoding="utf-8") as f:
         f.write("nombre,pais_registro,certificacion_solas,certificacion_ism\n")
-        for i in range(ROWS):
+        for i in range(rows):
             nombre = f"Naviera_{i:06d}"
             pais = paises_random[i]
             solas = solas_random[i]
             ism = ism_random[i]
             f.write(f"{nombre},{pais},{solas},{ism}\n")
-    print(f"Creado: {filename} ({ROWS:,} filas)")
+    print(f"Creado: {filename} ({rows:,} filas)")
 
 
-def create_buques():
+def create_buques(rows):
     filename = os.path.join(OUTPUT_DIR, "buque.csv")    
     
     # pregenerate all the random values
-    banderas_random = rng.choice(PAISES, size=ROWS)
-    anios_random = rng.integers(1980, 2026, size=ROWS)
-    capacidades_random = rng.integers(500, 24001, size=ROWS)
-    esloras_random = rng.integers(50, 400, size=ROWS)
-    mangas_random = rng.integers(10, 60, size=ROWS)
-    calados_random = rng.integers(5, 20, size=ROWS)
-    navieras_fk_random = rng.integers(0, ROWS, size=ROWS)
+    banderas_random = rng.choice(PAISES, size=rows)
+    anios_random = rng.integers(1980, 2026, size=rows)
+    capacidades_random = rng.integers(500, 24001, size=rows)
+    esloras_random = rng.integers(50, 400, size=rows)
+    mangas_random = rng.integers(10, 60, size=rows)
+    calados_random = rng.integers(5, 20, size=rows)
+    navieras_fk_random = rng.integers(0, rows, size=rows)
     
     with open(filename, "w", encoding="utf-8") as f:
         f.write("numero_omi,nombre,bandera,anio_construccion,capacidad_teu,eslora,manga,calado_maximo,nombre_naviera\n")
-        for i in range(ROWS):
+        for i in range(rows):
             numero_omi = OMI_BASE + i
             nombre = f"Buque_{i:06d}"
             bandera = banderas_random[i]
@@ -76,25 +75,25 @@ def create_buques():
             nombre_naviera = f"Naviera_{naviera_id:06d}"
             
             f.write(f"{numero_omi},{nombre},{bandera},{anio_construccion},{capacidad_teu},{eslora},{manga},{calado_maximo},{nombre_naviera}\n")
-    print(f"Creado: {filename} ({ROWS:,} filas)")
+    print(f"Creado: {filename} ({rows:,} filas)")
 
 
-def create_viajes():
+def create_viajes(rows):
     filename = os.path.join(OUTPUT_DIR, "viaje.csv")
     
     # pregenerate all the random values
-    dias_salida_random = rng.integers(0, 3000, size=ROWS)
-    duracion_dias_random = rng.integers(2, 91, size=ROWS)
-    estados_random = rng.choice(ESTADOS_VIAJE, size=ROWS)
-    consumos_combustible_random = rng.integers(1000, 20000, size=ROWS)
-    buques_fk_random = rng.integers(0, ROWS, size=ROWS)
+    dias_salida_random = rng.integers(0, 3000, size=rows)
+    duracion_dias_random = rng.integers(2, 91, size=rows)
+    estados_random = rng.choice(ESTADOS_VIAJE, size=rows)
+    consumos_combustible_random = rng.integers(1000, 20000, size=rows)
+    buques_fk_random = rng.integers(0, rows, size=rows)
     
     # base date for generating random dates in YYYY-MM-DD format
     base_date = datetime(2020, 1, 1)
 
     with open(filename, "w", encoding="utf-8") as f:
         f.write("codigo,fecha_estimada_salida,fecha_estimada_llegada,estado,consumo_combustible,buque_numero_omi\n")
-        for i in range(ROWS):
+        for i in range(rows):
             codigo = f"V{i:09d}"
             
             # Garantizar que fecha_llegada >= fecha_salida
@@ -111,22 +110,22 @@ def create_viajes():
             buque_numero_omi = OMI_BASE + buque_id
             
             f.write(f"{codigo},{fecha_salida.strftime('%Y-%m-%d')},{fecha_llegada.strftime('%Y-%m-%d')},{estado},{consumo_combustible},{buque_numero_omi}\n")
-    print(f"Creado: {filename} ({ROWS:,} filas)")
+    print(f"Creado: {filename} ({rows:,} filas)")
 
 
-def create_mercancias():
+def create_mercancias(rows):
     filename = os.path.join(OUTPUT_DIR, "mercancia.csv")
     
     # pregenerate all the random values
-    descripciones_random = rng.choice(DESCRIPCIONES_MERCANCIA, size=ROWS)
-    pesos_random = rng.integers(100.0, 50000.0, size=ROWS)
-    volumenes_random = rng.integers(1.0, 200.0, size=ROWS)
-    paises_random = rng.choice(PAISES, size=ROWS)
-    viajes_fk_random = rng.integers(0, ROWS, size=ROWS)
+    descripciones_random = rng.choice(DESCRIPCIONES_MERCANCIA, size=rows)
+    pesos_random = rng.integers(100.0, 50000.0, size=rows)
+    volumenes_random = rng.integers(1.0, 200.0, size=rows)
+    paises_random = rng.choice(PAISES, size=rows)
+    viajes_fk_random = rng.integers(0, rows, size=rows)
     
     with open(filename, "w", encoding="utf-8") as f:
         f.write("codigo,descripcion,peso_bruto,volumen,pais_origen,codigo_viaje\n")
-        for i in range(ROWS):
+        for i in range(rows):
             codigo = f"M{i:09d}"
             descripcion = descripciones_random[i]
             peso_bruto = pesos_random[i]
@@ -138,4 +137,11 @@ def create_mercancias():
             codigo_viaje = f"V{viaje_id:09d}"
             
             f.write(f"{codigo},{descripcion},{peso_bruto},{volumen},{pais_origen},{codigo_viaje}\n")
-    print(f"Creado: {filename} ({ROWS:,} filas)")
+    print(f"Creado: {filename} ({rows:,} filas)")
+    
+    
+def create_all_data(rows):
+    create_navieras(rows)
+    create_buques(rows)
+    create_viajes(rows)
+    create_mercancias(rows)

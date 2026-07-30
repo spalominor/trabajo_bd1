@@ -53,7 +53,7 @@ def query_2_polars(tables):
 
 
 def polars_query(tables, query):
-    if query == "query1":
+    if query == "query_1":
         return query_1_polars(tables)
-    elif query == "query2":
+    elif query == "query_2":
         return query_2_polars(tables)
