@@ -1,2 +1,101 @@
 codigo,descripcion,peso_bruto,volumen,pais_origen,codigo_viaje
-M000000000,Carga de granel de trigo,39502,25,Grecia,V000000000
+M000000000,Cafe de exportacion,36161,20,Peru,V000000007
+M000000001,Productos textiles y confecciones,3505,185,Ecuador,V000000011
+M000000002,Maquinaria industrial pesada,1850,40,Estados Unidos,V000000009
+M000000003,Piezas de repuesto automotrices,41804,130,Chile,V000000023
+M000000004,Cafe de exportacion,13442,28,Grecia,V000000036
+M000000005,Carga de granel de trigo,42059,134,Liberia,V000000052
+M000000006,Cafe de exportacion,19998,133,Liberia,V000000041
+M000000007,Productos textiles y confecciones,15614,168,Estados Unidos,V000000071
+M000000008,Productos textiles y confecciones,29160,135,Alemania,V000000067
+M000000009,Materiales de construccion,22779,177,Grecia,V000000086
+M000000010,Frutas y alimentos refrigerados,35417,175,Bahamas,V000000003
+M000000011,Maquinaria industrial pesada,41397,130,Panama,V000000090
+M000000012,Frutas y alimentos refrigerados,45648,79,Espana,V000000017
+M000000013,Maquinaria industrial pesada,4552,47,Alemania,V000000008
+M000000014,Acero laminado en bobinas,20597,17,Estados Unidos,V000000077
+M000000015,Materiales de construccion,1786,118,China,V000000082
+M000000016,Productos quimicos no peligrosos,34047,50,Bahamas,V000000064
+M000000017,Piezas de repuesto automotrices,46705,11,Hong Kong,V000000018
+M000000018,Contenedor con productos electronicos,48434,14,Singapur,V000000033
+M000000019,Productos textiles y confecciones,15540,98,Panama,V000000015
+M000000020,Piezas de repuesto automotrices,11410,8,Panama,V000000018
+M000000021,Productos quimicos no peligrosos,7699,126,Ecuador,V000000010
+M000000022,Productos textiles y confecciones,885,78,Ecuador,V000000023
+M000000023,Acero laminado en bobinas,13026,27,Colombia,V000000061
+M000000024,Cafe de exportacion,10992,19,Reino Unido,V000000022
+M000000025,Carga de granel de trigo,8673,30,Brasil,V000000084
+M000000026,Piezas de repuesto automotrices,41823,132,Bahamas,V000000015
+M000000027,Maquinaria industrial pesada,46534,118,Estados Unidos,V000000073
+M000000028,Productos quimicos no peligrosos,31402,80,Mexico,V000000050
+M000000029,Piezas de repuesto automotrices,44913,131,Grecia,V000000045
+M000000030,Productos quimicos no peligrosos,27962,60,Estados Unidos,V000000057
+M000000031,Piezas de repuesto automotrices,1155,198,Estados Unidos,V000000006
+M000000032,Piezas de repuesto automotrices,10751,113,Panama,V000000099
+M000000033,Maquinaria industrial pesada,45623,142,Peru,V000000073
+M000000034,Acero laminado en bobinas,49167,99,China,V000000083
+M000000035,Frutas y alimentos refrigerados,3287,157,Brasil,V000000068
+M000000036,Maquinaria industrial pesada,21945,19,Bahamas,V000000066
+M000000037,Piezas de repuesto automotrices,44080,193,Peru,V000000048
+M000000038,Carga de granel de trigo,21006,143,Liberia,V000000035
+M000000039,Frutas y alimentos refrigerados,33573,127,Singapur,V000000002
+M000000040,Productos quimicos no peligrosos,35258,33,Hong Kong,V000000068
+M000000041,Materiales de construccion,11846,135,Reino Unido,V000000029
+M000000042,Materiales de construccion,46526,139,Peru,V000000087
+M000000043,Contenedor con productos electronicos,44062,178,Alemania,V000000033
+M000000044,Productos quimicos no peligrosos,29036,132,Brasil,V000000068
+M000000045,Cafe de exportacion,36136,180,Mexico,V000000032
+M000000046,Maquinaria industrial pesada,4425,191,Brasil,V000000094
+M000000047,Frutas y alimentos refrigerados,46391,120,Estados Unidos,V000000032
+M000000048,Piezas de repuesto automotrices,5010,68,China,V000000003
+M000000049,Piezas de repuesto automotrices,21984,89,Hong Kong,V000000082
+M000000050,Piezas de repuesto automotrices,38021,108,Singapur,V000000009
+M000000051,Productos quimicos no peligrosos,39324,9,Reino Unido,V000000083
+M000000052,Frutas y alimentos refrigerados,10513,183,Reino Unido,V000000036
+M000000053,Contenedor con productos electronicos,45229,185,Dinamarca,V000000048
+M000000054,Cafe de exportacion,23161,113,Chile,V000000061
+M000000055,Cafe de exportacion,43863,140,Japon,V000000048
+M000000056,Carga de granel de trigo,16147,109,Dinamarca,V000000026
+M000000057,Carga de granel de trigo,34541,129,Peru,V000000030
+M000000058,Productos quimicos no peligrosos,13103,62,Espana,V000000096
+M000000059,Materiales de construccion,43145,67,Islas Marshall,V000000052
+M000000060,Cafe de exportacion,11251,89,Japon,V000000017
+M000000061,Productos quimicos no peligrosos,7318,32,Espana,V000000019
+M000000062,Carga de granel de trigo,41734,196,Peru,V000000015
+M000000063,Maquinaria industrial pesada,24592,149,Espana,V000000097
+M000000064,Carga de granel de trigo,47343,184,Noruega,V000000080
+M000000065,Productos textiles y confecciones,8532,112,Brasil,V000000028
+M000000066,Materiales de construccion,8950,109,Singapur,V000000037
+M000000067,Productos quimicos no peligrosos,25783,53,Mexico,V000000040
+M000000068,Materiales de construccion,40401,26,Espana,V000000006
+M000000069,Frutas y alimentos refrigerados,6860,44,Japon,V000000085
+M000000070,Acero laminado en bobinas,11938,130,Estados Unidos,V000000007
+M000000071,Cafe de exportacion,35854,118,Islas Marshall,V000000079
+M000000072,Cafe de exportacion,47102,159,Bahamas,V000000070
+M000000073,Productos quimicos no peligrosos,27012,140,Estados Unidos,V000000018
+M000000074,Carga de granel de trigo,28870,46,Islas Marshall,V000000010
+M000000075,Acero laminado en bobinas,4216,9,Liberia,V000000068
+M000000076,Contenedor con productos electronicos,6141,170,Colombia,V000000090
+M000000077,Productos quimicos no peligrosos,34124,7,Islas Marshall,V000000034
+M000000078,Materiales de construccion,13135,155,Alemania,V000000027
+M000000079,Productos quimicos no peligrosos,31772,164,Espana,V000000032
+M000000080,Productos quimicos no peligrosos,48996,60,China,V000000021
+M000000081,Piezas de repuesto automotrices,41597,34,Grecia,V000000056
+M000000082,Productos quimicos no peligrosos,41941,122,Espana,V000000022
+M000000083,Contenedor con productos electronicos,44927,69,Hong Kong,V000000069
+M000000084,Contenedor con productos electronicos,8316,142,Grecia,V000000086
+M000000085,Contenedor con productos electronicos,14739,82,Panama,V000000008
+M000000086,Productos textiles y confecciones,11586,92,Malta,V000000006
+M000000087,Materiales de construccion,24773,112,Ecuador,V000000055
+M000000088,Piezas de repuesto automotrices,29298,53,Grecia,V000000003
+M000000089,Cafe de exportacion,26809,161,Singapur,V000000087
+M000000090,Piezas de repuesto automotrices,21525,112,Islas Marshall,V000000003
+M000000091,Frutas y alimentos refrigerados,140,101,Peru,V000000036
+M000000092,Productos quimicos no peligrosos,43427,89,Espana,V000000066
+M000000093,Materiales de construccion,15631,21,China,V000000062
+M000000094,Carga de granel de trigo,24909,99,Mexico,V000000037
+M000000095,Productos textiles y confecciones,27150,181,Liberia,V000000074
+M000000096,Piezas de repuesto automotrices,47279,159,Hong Kong,V000000018
+M000000097,Materiales de construccion,41941,30,Panama,V000000083
+M000000098,Acero laminado en bobinas,5598,57,Alemania,V000000040
+M000000099,Productos textiles y confecciones,36741,74,Dinamarca,V000000053

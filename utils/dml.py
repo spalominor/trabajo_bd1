@@ -43,7 +43,7 @@ def select_all_database(name_database):
     result = {}
     for table in TABLES:
         result[table] = pl.read_database_uri(
-            query=f"SELECT * FROM {table};",
+            query=f"SELECT * FROM {table.upper()};",
             uri=DB_URLS[name_database],
             engine="connectorx"
         )
@@ -114,7 +114,7 @@ def insert_data_mysql(number_rows):
                     
                 sql_load = f"""
                     LOAD DATA LOCAL INFILE '{csv_filepath}'
-                    INTO TABLE {table}
+                    INTO TABLE {table.upper()}
                     FIELDS TERMINATED BY ','
                     OPTIONALLY ENCLOSED BY '"'
                     LINES TERMINATED BY '\n'
