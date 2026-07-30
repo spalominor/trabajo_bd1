@@ -2,6 +2,8 @@ from collections import defaultdict
 from utils import data, ddl, dml, pythonic_queries, summarize
 
 
+
+"""
 TEST_DATABASES = ["postgres", "mysql"]
 TEST_ROWS = [1, 10, 100]
 TEST_QUERIES = ["query_1", "query_2"]
@@ -11,7 +13,7 @@ TEST_DATABASES = ["postgres", "mysql"]
 TEST_ROWS = [1000, 10000, 100000]
 TEST_QUERIES = ["query_1", "query_2"]
 TEST_TRIES = 3
-"""
+
 
 # step 1: database creation
 def schema_creation():
