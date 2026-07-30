@@ -86,3 +86,7 @@ def print_results():
     for (db, size, query), times in polars_query_results.items():
         avg_time = sum(times) / len(times)
         print(f"[{db.upper()}] Filas: {size:<7} | Query: {query} | Tiempos: {times} | Promedio: {avg_time:.4f}s")
+        
+
+if __name__ == "__main__":
+    print_results()
