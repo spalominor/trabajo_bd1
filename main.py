@@ -1,5 +1,5 @@
 from collections import defaultdict
-from utils import data, ddl, dml, pythonic_queries, summarize
+from utils import data, ddl, dml, pythonic_queries
 
 
 
