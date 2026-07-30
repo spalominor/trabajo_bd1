@@ -21,7 +21,7 @@ POSTGRES_URL = f"postgresql://{POSTGRES_CREDENTIALS['user']}:{POSTGRES_CREDENTIA
 MYSQL_CREDENTIALS = {
     "host": os.getenv("MYSQL_HOST"),
     "port": int(os.getenv("MYSQL_PORT")),
-    "database": os.getenv("MYSQL_DB"),
+    "database": os.getenv("MYSQL_DATABASE"),
     "user": os.getenv("MYSQL_USER"),
     "password": os.getenv("MYSQL_PASSWORD")  
 }
@@ -48,12 +48,17 @@ def create_postgres_tables():
 def create_mysql_tables():
     with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
         with cnx.cursor() as cur:
+            cur.execute(f"USE {MYSQL_CREDENTIALS['database']};")
             # Execute the SQL commands from the schema.sql file
             with open("mysql/schema.sql", "r") as f:
                 sql_commands = f.read()
-                for response in cur.execute(sql_commands, multi=True):
-                    pass
-                cnx.commit()
+                
+            statements = sql_commands.split(';')
+            for statement in statements:
+                if statement.strip():
+                    cur.execute(statement)
+                    
+            cnx.commit()
 
             # Validate the creation of the tables by querying the information_schema
             cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = %s;", (MYSQL_CREDENTIALS['database'],))
