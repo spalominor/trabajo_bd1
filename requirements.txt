@@ -1,5 +1,7 @@
+connectorx==0.4.5
 Faker==40.36.0
 mysql-connector-python==9.7.0
+numpy==2.5.1
 polars==1.43.1
 polars-runtime-32==1.43.1
 psycopg2-binary==2.9.12

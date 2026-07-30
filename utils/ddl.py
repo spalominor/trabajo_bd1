@@ -23,7 +23,8 @@ MYSQL_CREDENTIALS = {
     "port": int(os.getenv("MYSQL_PORT")),
     "database": os.getenv("MYSQL_DATABASE"),
     "user": os.getenv("MYSQL_USER"),
-    "password": os.getenv("MYSQL_PASSWORD")  
+    "password": os.getenv("MYSQL_PASSWORD"),
+    "allow_local_infile": True
 }
 
 

@@ -1,6 +1,7 @@
 services:
   mysql-db:
     image: mysql:${MYSQL_IMAGE}
+    command: --local-infile=1
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

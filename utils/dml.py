@@ -24,7 +24,7 @@ POSTGRES_URL = f"postgresql://{POSTGRES_CREDENTIALS['user']}:{POSTGRES_CREDENTIA
 MYSQL_CREDENTIALS = {
     "host": os.getenv("MYSQL_HOST"),
     "port": int(os.getenv("MYSQL_PORT")),
-    "database": os.getenv("MYSQL_DB"),
+    "database": os.getenv("MYSQL_DATABASE"),
     "user": os.getenv("MYSQL_USER"),
     "password": os.getenv("MYSQL_PASSWORD"),
     "allow_local_infile": True
@@ -118,8 +118,7 @@ def insert_data_mysql(number_rows):
                     FIELDS TERMINATED BY ','
                     OPTIONALLY ENCLOSED BY '"'
                     LINES TERMINATED BY '\n'
-                    IGNORE 1 LINES
-                    LIMIT {number_rows};
+                    IGNORE 1 LINES;
                 """
                 cur.execute(sql_load)
 
