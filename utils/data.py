@@ -8,7 +8,7 @@ rng = np.random.default_rng(seed=23)
 
 OUTPUT_DIR = "data"
 ROWS = 100
-OMI_BASE = 8000000
+OMI_BASE = 9000000
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

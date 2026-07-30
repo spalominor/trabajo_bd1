@@ -80,3 +80,12 @@ def drop_mysql_tables():
             cur.execute("DROP TABLE IF EXISTS MERCANCIA, VIAJE, BUQUE, NAVIERA;")
             cnx.commit()
             print("Tables dropped in the MySQL database.")
+            
+
+def reset_db(name_database):
+    if name_database == "postgres":
+        drop_postgres_tables()
+        create_postgres_tables()
+    elif name_database == "mysql":
+        drop_mysql_tables()
+        create_mysql_tables()    

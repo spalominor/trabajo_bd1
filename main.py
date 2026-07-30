@@ -1,6 +1,17 @@
+from collections import defaultdict
 from utils import data, ddl, dml, pythonic_queries, summarize
 
 
+TEST_DATABASES = ["postgres", "mysql"]
+TEST_ROWS = [1, 10, 100]
+TEST_QUERIES = ["query1", "query2"]
+TEST_TRIES = 3
+"""
+TEST_DATABASES = ["postgres", "mysql"]
+TEST_ROWS = [1000, 10000, 100000]
+TEST_QUERIES = ["query1", "query2"]
+TEST_TRIES = 3
+"""
 
 # step 1: database creation
 def schema_creation():
@@ -14,88 +25,64 @@ def artificial_data_creation():
     data.create_buques()
     data.create_viajes()
     data.create_mercancias()
-    
 
-# step 3: data insertion
-def data_insertion():
-    TEST_ROWS = [1000, 10000, 100000]
-    TRIES = 3
-    
-    # postgres
-    results_postgres = {}
-    for number_rows in TEST_ROWS:
-        for _ in range(TRIES):
-            results_postgres[number_rows] = []
-            ddl.drop_postgres_tables()
-            ddl.create_postgres_tables()
-            elapsed_time = dml.insert_data_postgres(number_rows)
-            results_postgres[number_rows].append(elapsed_time)
-            
-    # mysql
-    results_mysql = {}
-    for number_rows in TEST_ROWS:
-        for _ in range(TRIES):
-            results_mysql[number_rows] = []
-            ddl.drop_mysql_tables()
-            ddl.create_mysql_tables()
-            elapsed_time = dml.insert_data_mysql(number_rows)
-            results_mysql[number_rows].append(elapsed_time)
-            
-    return results_postgres, results_mysql
-            
 
-# step 4: sql queries execution
-def sql_queries_execution():
-    TEST_QUERIES = ["query1", "query2"]
-    TRIES = 3
+def benchmark():
+    # initialize dicts for results
+    insertion_results = defaultdict(list)
+    sql_query_results = defaultdict(list)
+    polars_query_results = defaultdict(list)
     
-    # postgres
-    results_postgres = {}
-    for query in TEST_QUERIES:
-        for _ in range(TRIES):
-            results_postgres[query] = []
-            result, elapsed_time = dml.query_postgres(query)
-            results_postgres[query].append(elapsed_time)
-            
-    # mysql
-    results_mysql = {}
-    for query in TEST_QUERIES:
-        for _ in range(TRIES):
-            results_mysql[query] = []
-            result, elapsed_time = dml.query_mysql(query)
-            results_mysql[query].append(elapsed_time)
-            
-    return results_postgres, results_mysql
-            
+    # step 1 and 2
+    schema_creation()
+    artificial_data_creation()
+    
+    # for each number of rows
+    for db_name in TEST_DATABASES:
+        for number_rows in TEST_ROWS:
+            for attempt in range(TEST_TRIES):
+                ddl.reset_db(db_name)
+                
+                # fase ii: data insertion
+                insertion_time = dml.insert_data(db_name, number_rows)
+                insertion_results[(db_name, number_rows)].append(insertion_time)
+                
+                # fase iii: sql queries execution
+                for query in TEST_QUERIES:
+                    result, sql_time = dml.query(db_name, query)
+                    sql_query_results[(db_name, query)].append(sql_time)
+                    
+                # fase iv: pythonic queries execution
+                tables = dml.select_all_database(db_name)
+                for query in TEST_QUERIES:
+                    result, polars_time = pythonic_queries.polars_query(tables, query)
+                    polars_query_results[(db_name, query)].append(polars_time)
+    
+    return insertion_results, sql_query_results, polars_query_results
 
-# step 5: pythonic queries execution
-def pythonic_queries_execution():
-    TEST_DATABASES = ["postgres", "mysql"]
-    TEST_QUERIES = ["query1", "query2"]
-    TRIES = 3
-    
-    # postgres
-    results = {}
-    for database in TEST_DATABASES:
-        for query in TEST_QUERIES:
-            for _ in range(TRIES):
-                results[(database, query)] = []
-                if query == "query1":
-                    result, elapsed_time = pythonic_queries.query_1_polars(database)
-                elif query == "query2":
-                    result, elapsed_time = pythonic_queries.query_2_polars(database)
-                results[(database, query)].append(elapsed_time)
-    
-    return results
-    
 
 # step 6: print all the results
 def print_results():
-    # fase ii: data insertion
-    results_postgres_2, results_mysql_2 = data_insertion()
+    # obtain the results from the benchmark function
+    insertion_results, sql_query_results, polars_query_results = benchmark()
     
-    # fase iii: sql queries execution
-    results_postgres_3, results_mysql_3 = sql_queries_execution()
-    
-    # fase iv: pythonic queries execution
-    results_4 = pythonic_queries_execution()
+    print("\n" + "=" * 50)
+    print(" 1. RESULTADOS DE INSERCIÓN DE DATOS")
+    print("=" * 50)
+    for (db, size), times in insertion_results.items():
+        avg_time = sum(times) / len(times)
+        print(f"[{db.upper()}] Filas: {size:<7} | Tiempos: {times} | Promedio: {avg_time:.4f}s")
+
+    print("\n" + "=" * 50)
+    print(" 2. RESULTADOS DE CONSULTAS SQL NATIVAS")
+    print("=" * 50)
+    for (db, size, query), times in sql_query_results.items():
+        avg_time = sum(times) / len(times)
+        print(f"[{db.upper()}] Filas: {size:<7} | Query: {query} | Tiempos: {times} | Promedio: {avg_time:.4f}s")
+
+    print("\n" + "=" * 50)
+    print(" 3. RESULTADOS DE CONSULTAS CON POLARS")
+    print("=" * 50)
+    for (db, size, query), times in polars_query_results.items():
+        avg_time = sum(times) / len(times)
+        print(f"[{db.upper()}] Filas: {size:<7} | Query: {query} | Tiempos: {times} | Promedio: {avg_time:.4f}s")
