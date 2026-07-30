@@ -26,12 +26,13 @@ MYSQL_CREDENTIALS = {
     "port": int(os.getenv("MYSQL_PORT")),
     "database": os.getenv("MYSQL_DB"),
     "user": os.getenv("MYSQL_USER"),
-    "password": os.getenv("MYSQL_PASSWORD")  
+    "password": os.getenv("MYSQL_PASSWORD"),
+    "allow_local_infile": True
 }
 
 MYSQL_URL = f"mysql://{MYSQL_CREDENTIALS['user']}:{MYSQL_CREDENTIALS['password']}@{MYSQL_CREDENTIALS['host']}:{MYSQL_CREDENTIALS['port']}/{MYSQL_CREDENTIALS['database']}"
 
-TABLES = ["mercancia", "viaje", "buque", "naviera"]
+TABLES = ["naviera", "buque", "viaje", "mercancia"]
 DB_URLS = {
     "postgres": POSTGRES_URL,
     "mysql": MYSQL_URL
@@ -100,6 +101,7 @@ def insert_data_postgres(number_rows):
             conn.commit()
             elapsed_time = time.perf_counter() - start_time
             print(f"Inserted {number_rows} rows into Postgres in {elapsed_time:.4f} seconds.")
+    return elapsed_time
 
 
 
@@ -125,3 +127,4 @@ def insert_data_mysql(number_rows):
             cnx.commit()
             elapsed_time = time.perf_counter() - start_time
             print(f"Inserted {number_rows} rows into MySQL in {elapsed_time:.4f} seconds.")
+    return elapsed_time

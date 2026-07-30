@@ -1,9 +1,16 @@
+import time
 import polars as pl
 import dml
 
 
 
-def query_1_polars(tables):
+def query_1_polars(name_database):
+    # initialize the timer
+    start_time = time.perf_counter()
+    
+    # obtain the tables
+    tables =dml.select_all_database(name_database)
+    
     naviera = tables["naviera"]
     buque = tables["buque"]
     viaje = tables["viaje"]
@@ -21,10 +28,18 @@ def query_1_polars(tables):
         ])
     )
     
-    return result
+    elapsed_time = time.perf_counter() - start_time
+    
+    return result, elapsed_time
 
 
-def query_2_polars(tables):
+def query_2_polars(name_database):
+    # initialize the timer
+    start_time = time.perf_counter()
+    
+    # obtain the tables
+    tables = dml.select_all_database(name_database)
+    
     naviera = tables["naviera"]
     buque = tables["buque"]
     viaje = tables["viaje"]
@@ -39,4 +54,6 @@ def query_2_polars(tables):
         .rename({"nombre": "nombre_naviera"})
     )
     
-    return result
+    elapsed_time = time.perf_counter() - start_time
+    
+    return result, elapsed_time
