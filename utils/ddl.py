@@ -63,3 +63,21 @@ def create_mysql_tables():
             print("Tables created in the MySQL database:")
             for table in tables:
                 print(table[0])
+                
+
+def drop_postgres_tables():
+    with psycopg2.connect(POSTGRES_URL) as conn:
+        with conn.cursor() as cur:
+            # Drop the tables in reverse order to avoid foreign key constraint issues
+            cur.execute("DROP TABLE IF EXISTS MERCANCIA, VIAJE, BUQUE, NAVIERA CASCADE;")
+            conn.commit()
+            print("Tables dropped in the PostgreSQL database.")
+
+
+def drop_mysql_tables():
+    with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
+        with cnx.cursor() as cur:
+            # Drop the tables in reverse order to avoid foreign key constraint issues
+            cur.execute("DROP TABLE IF EXISTS MERCANCIA, VIAJE, BUQUE, NAVIERA;")
+            cnx.commit()
+            print("Tables dropped in the MySQL database.")
