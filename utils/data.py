@@ -98,8 +98,8 @@ def crear_viajes():
             codigo = f"V{i:09d}"
             
             # Garantizar que fecha_llegada >= fecha_salida
-            dias_salida = dias_salida_random[i]
-            duracion_dias = duracion_dias_random[i]
+            dias_salida = int(dias_salida_random[i])
+            duracion_dias = int(duracion_dias_random[i])
             fecha_salida = base_date + timedelta(days=dias_salida)
             fecha_llegada = fecha_salida + timedelta(days=duracion_dias)
             
