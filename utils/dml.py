@@ -1,7 +1,9 @@
 import os
+import time
 from dotenv import load_dotenv
 import psycopg2
 import mysql.connector as cpy
+import polars as pl
 
 
 
@@ -26,91 +28,45 @@ MYSQL_CREDENTIALS = {
     "password": os.getenv("MYSQL_PASSWORD")  
 }
 
+MYSQL_URL = f"mysql://{MYSQL_CREDENTIALS['user']}:{MYSQL_CREDENTIALS['password']}@{MYSQL_CREDENTIALS['host']}:{MYSQL_CREDENTIALS['port']}/{MYSQL_CREDENTIALS['database']}"
 
-# per default, the select all is in the MySQL database
-# TODO: add a parameter to select the database (MySQL or PostgreSQL)
-# generics functions with params
-def select_all_mysql():
+TABLES = ["mercancia", "viaje", "buque", "naviera"]
+DB_URLS = {
+    "postgres": POSTGRES_URL,
+    "mysql": MYSQL_URL
+}
+
+
+def select_all_database(name_database):
+    result = {}
+    for table in TABLES:
+        result[table] = pl.read_database_uri(
+            query=f"SELECT * FROM {table};",
+            uri=DB_URLS[name_database],
+            engine="connectorx"
+        )
+    return result
+    
+    
+def query_mysql(name_query):
     with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
         with cnx.cursor() as cur:
-            cur.execute("SELECT * FROM mercancia;")
-            mercancia_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM viaje;")
-            viaje_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM buque;")
-            buque_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM naviera;")
-            naviera_rows = cur.fetchall()
-    
-    return {
-        "mercancia": mercancia_rows,
-        "viaje": viaje_rows,
-        "buque": buque_rows,
-        "naviera": naviera_rows
-    }
-    
-    
-def select_all_postgres():
+            with open(f"mysql/{name_query}.sql", "r") as f:
+                sql_query = f.read()
+                start_time = time.perf_counter()
+                cur.execute(sql_query)
+                result = cur.fetchall()
+                elapsed_time = time.perf_counter() - start_time
+    return result, elapsed_time
+
+
+def query_postgres(name_query):
     with psycopg2.connect(POSTGRES_URL) as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT * FROM mercancia;")
-            mercancia_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM viaje;")
-            viaje_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM buque;")
-            buque_rows = cur.fetchall()
-            
-            cur.execute("SELECT * FROM naviera;")
-            naviera_rows = cur.fetchall()
-    
-    return {
-        "mercancia": mercancia_rows,
-        "viaje": viaje_rows,
-        "buque": buque_rows,
-        "naviera": naviera_rows
-    }
-    
-    
-def query_1_mysql():
-    with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
-        with cnx.cursor() as cur:
-            with open("mysql/query_1.sql", "r") as f:
+            with open(f"postgres/{name_query}.sql", "r") as f:
                 sql_query = f.read()
+                start_time = time.perf_counter()
                 cur.execute(sql_query)
                 result = cur.fetchall()
-    return result
-
-
-def query_2_mysql():
-    with cpy.connect(**MYSQL_CREDENTIALS) as cnx:
-        with cnx.cursor() as cur:
-            with open("mysql/query_2.sql", "r") as f:
-                sql_query = f.read()
-                cur.execute(sql_query)
-                result = cur.fetchall()
-    return result
-
-
-def query_1_postgres():
-    with psycopg2.connect(POSTGRES_URL) as conn:
-        with conn.cursor() as cur:
-            with open("postgres/query_1.sql", "r") as f:
-                sql_query = f.read()
-                cur.execute(sql_query)
-                result = cur.fetchall()
-    return result
-
-
-def query_2_postgres():
-    with psycopg2.connect(POSTGRES_URL) as conn:
-        with conn.cursor() as cur:
-            with open("postgres/query_2.sql", "r") as f:
-                sql_query = f.read()
-                cur.execute(sql_query)
-                result = cur.fetchall()
-    return result
+                elapsed_time = time.perf_counter() - start_time
+    return result, elapsed_time
